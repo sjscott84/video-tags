@@ -27,6 +27,18 @@ app.run(function($ionicPlatform) {
 
 app.controller('taggerCtrl', ['$scope', 'existingTags', function($scope, existingTags){
   scope = $scope;
+
+  scope.currentTags = function(){
+    scope.tags = ['dance', 'twirl', 'jump'];
+    //console.log(scope.tags);
+    return scope.tags;
+    //console.log('worked');
+  }
+
+  scope.suggestedTags = function(){
+    scope.tags = ['high kick', 'charleston', 'suzy q'];
+    return scope.tags;
+  }
   /*scope.matchingTags = [];
 
   scope.openTagBox = function(){

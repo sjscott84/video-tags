@@ -30,12 +30,13 @@
       </ion-header-bar>-->
       <ion-content>
         <div ng-controller="taggerCtrl">
-          <create-tags></create-tags>
+          <create-tags currenttags="currentTags()" suggestedtags="suggestedTags()"></create-tags>
           <!--<button class="button button-positive" ng-click="openTagBox()">
             Add Tag
           </button>-->
         </div>
       </ion-content>
     </ion-pane>
+
   </body>
 </html>

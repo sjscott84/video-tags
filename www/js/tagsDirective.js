@@ -1,7 +1,10 @@
 angular.module('tags')
   .directive('createTags', function(){
     return{
-      scope: {},
+      scope: {
+        currenttags: '&',
+        suggestedtags: '&'
+      },
       template: '<label class="item item-input item-floating-label">' +
                   '<span class="input-label">Tag</span>' +
                   '<input type="text" placeholder="Tag" ng-model="data.tag" ng-keyup="getSuggestedTags()">' +
@@ -11,12 +14,16 @@ angular.module('tags')
                     '{{tag}}' +
                   '</ion-item>' +
                 '</ion-list>',
-      link: function(scope, element, attrs) {
-          scope.data = {};
-          scope.matchingTags = [];
-              scope.getSuggestedTags = function(suggestedTags) {
-                console.log(scope.data.tag);
-              }
+      link: function(scope) {
+        scope.data = {};
+        scope.matchingTags = [];
+            scope.getSuggestedTags = function() {
+              //console.log(scope.data.tag);
+              var currentTags = scope.currenttags();
+              var suggestedTags = scope.suggestedtags();
+              console.log(currentTags+' '+suggestedTags);
+              //scope.tags();
             }
+          }
     }
   })

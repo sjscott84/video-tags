@@ -21,3 +21,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.col{
+	background-color: #f7f7f7;
+	border: 1px solid;
+}
+

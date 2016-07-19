@@ -1,1 +1,10 @@
-/* Empty. Add your own CSS if you like */
+.tag-result{
+	display: inline-block;
+	background-color: #f7f7f7;
+	padding: 5px;
+	margin: 5px;
+}
+
+.icon{
+	padding-left: 10px;
+}

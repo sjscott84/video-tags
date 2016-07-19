@@ -5,7 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('tags', ['ionic'])
 
-.run(function($ionicPlatform) {
+app.value('existingTags', []);
+
+app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -23,9 +25,52 @@ var app = angular.module('tags', ['ionic'])
   });
 })
 
-app.controller('taggerCtrl', ['$scope', function($scope){
-  $scope.openTagBox = function(){
-    console.log("open box");
+app.controller('taggerCtrl', ['$scope', 'taggerPopup', 'existingTags', function($scope, taggerPopup, existingTags){
+  scope = $scope;
+  scope.matchingTags = [];
+
+  scope.openTagBox = function(){
+    taggerPopup.createNewTags(scope);
+  }
+
+  scope.getTags = function(){
+    if(scope.data.tag.length !== 0){
+      var entry = scope.data.tag.length;
+    }
+    scope.matchingTags = [];
+    for(var i = 0; i<existingTags.length; i++){
+      var what = existingTags[i].slice(0, entry);
+      if(scope.data.tag.match(new RegExp([what], 'i'))){
+        scope.matchingTags.push(existingTags[i]);
+      }
+    }
+  }
+
+  scope.closeList = function(){
+    scope.matchingTags = [];
+  }
+
+}])
+
+app.factory('taggerPopup',['$ionicPopup', 'existingTags', function($ionicPopup, existingTags){
+  return{
+    createNewTags: function(scope){
+      scope.data = {};
+      var myPopup = $ionicPopup.show({
+        templateUrl: 'templates/tagPopup.html',
+        title: 'Create Tags',
+        scope: scope,
+        buttons: [
+          {text: 'Create Tag',
+            onTap: function(){
+              if(existingTags.indexOf(scope.data.tag) === -1){
+                existingTags.push(scope.data.tag);
+              }
+            }
+          }
+        ]
+      })
+    }
   }
 }])
 

@@ -25,9 +25,9 @@ app.run(function($ionicPlatform) {
   });
 })
 
-app.controller('taggerCtrl', ['$scope', 'taggerPopup', 'existingTags', function($scope, taggerPopup, existingTags){
+app.controller('taggerCtrl', ['$scope', 'existingTags', function($scope, existingTags){
   scope = $scope;
-  scope.matchingTags = [];
+  /*scope.matchingTags = [];
 
   scope.openTagBox = function(){
     taggerPopup.createNewTags(scope);
@@ -48,29 +48,8 @@ app.controller('taggerCtrl', ['$scope', 'taggerPopup', 'existingTags', function(
 
   scope.closeList = function(){
     scope.matchingTags = [];
-  }
+  }*/
 
 }])
 
-app.factory('taggerPopup',['$ionicPopup', 'existingTags', function($ionicPopup, existingTags){
-  return{
-    createNewTags: function(scope){
-      scope.data = {};
-      var myPopup = $ionicPopup.show({
-        templateUrl: 'templates/tagPopup.html',
-        title: 'Create Tags',
-        scope: scope,
-        buttons: [
-          {text: 'Create Tag',
-            onTap: function(){
-              if(existingTags.indexOf(scope.data.tag) === -1){
-                existingTags.push(scope.data.tag);
-              }
-            }
-          }
-        ]
-      })
-    }
-  }
-}])
 

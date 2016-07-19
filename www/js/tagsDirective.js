@@ -13,7 +13,7 @@ angular.module('tags')
                   '<input type="text" placeholder="Tag" ng-model="data.tag" ng-keyup="getSuggestedTags()">' +
                 '</label>' +
                 '<ion-list>' +
-                  '<ion-item ng-repeat="tag in matchingTags" ng-click="data.tag=tag; closeList()">' +
+                  '<ion-item ng-repeat="tag in matchingTags" ng-click="saveNewTag(tag)">' +
                     '{{tag}}' +
                   '</ion-item>' +
                 '</ion-list>',
@@ -21,13 +21,27 @@ angular.module('tags')
         scope.data = {};
         scope.matchingTags = [];
         scope.currentTags = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven'];
-            scope.getSuggestedTags = function() {
-              //console.log(scope.data.tag);
-              //scope.currentTags = scope.currenttags();
-              var suggestedTags = scope.suggestedtags();
-              //console.log(currentTags+' '+suggestedTags);
-              //scope.tags();
+        //displays the suggested tags based on user input
+        scope.getSuggestedTags = function() {
+          //scope.currentTags = scope.currenttags();
+          var suggestedTags = scope.suggestedtags();
+          if(scope.data.tag.length !== 0){
+            var entry = scope.data.tag.length;
+          }
+          scope.matchingTags = [];
+          for(var i = 0; i<suggestedTags.length; i++){
+            var what = suggestedTags[i].slice(0, entry);
+            if(scope.data.tag.match(new RegExp([what], 'i'))){
+              scope.matchingTags.push(suggestedTags[i])
             }
           }
+        }
+        //
+        scope.saveNewTag = function(tag){
+          scope.currentTags.push(tag);
+          scope.data = {};
+          scope.matchingTags = [];
+        }
+      }
     }
   })

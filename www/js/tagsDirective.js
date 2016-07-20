@@ -10,7 +10,7 @@ angular.module('tags')
                 '</div>'+
                 '<label class="item item-input item-floating-label">' +
                   '<span class="input-label">Tag</span>' +
-                  '<input type="text" placeholder="Tag" ng-model="data.tag" ng-keyup="getSuggestedTags()">' +
+                  '<input type="text" placeholder="Tag" ng-model="data.tag" ng-keyup="getSuggestedTags()" ng-keydown="saveTag()">' +
                 '</label>' +
                 '<ion-list>' +
                   '<ion-item ng-repeat="tag in matchingTags" ng-click="saveNewTag(tag)">' +
@@ -36,9 +36,24 @@ angular.module('tags')
             }
           }
         }
-        //
+        //Saves tag when enter key is pressed
+        scope.saveTag = function(){
+          if(event.keyCode === 13){
+            if(scope.currentTags.indexOf(scope.data.tag) === -1){
+              scope.currentTags.push(scope.data.tag);
+            }else{
+              alert('You already have this tag');
+            }
+            scope.data = {};
+          }
+        }
+        //Saves a new tag if a suggested tag is used
         scope.saveNewTag = function(tag){
-          scope.currentTags.push(tag);
+          if(scope.currentTags.indexOf(tag) === -1){
+            scope.currentTags.push(tag);
+          }else{
+            alert('You already have this tag')
+          }
           scope.data = {};
           scope.matchingTags = [];
         }

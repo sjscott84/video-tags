@@ -1,5 +1,6 @@
 angular.module('tags')
   .directive('createTags',['$timeout', function($timeout){
+
     return{
       scope: {
         currenttags: '&',
@@ -38,21 +39,21 @@ angular.module('tags')
         //Saves tag when enter key is pressed unless tag already exists and then it flashes the existing tag
         scope.saveTag = function(){
           if(event.keyCode === 13){
-            if(scope.currentTags.indexOf(scope.data.tag) === -1){
-              scope.currentTags.push(scope.data.tag);
-            }else{
-              var elements = document.getElementsByClassName("tag-result");
-              var index = scope.currentTags.indexOf(scope.data.tag);
-              elements[index].style.backgroundColor = "#387ef5";
-              $timeout(function(){
-                elements[index].style.backgroundColor = "#f7f7f7";
-              }, 1000);
-            }
-            scope.data = {};
+            scope.saveAllTags(scope.data.tag);
           }
         }
         //Saves a new tag if a suggested tag is used
         scope.saveNewTag = function(tag){
+          scope.saveAllTags(tag);
+        }
+        //Delete a tag from currentTags
+        scope.deleteTag = function(tag){
+          var index = scope.currentTags.indexOf(tag);
+          if(index > -1){
+            scope.currentTags.splice(index, 1);
+          }
+        }
+        scope.saveAllTags = function (tag){
           if(scope.currentTags.indexOf(tag) === -1){
             scope.currentTags.push(tag);
           }else{
@@ -65,13 +66,6 @@ angular.module('tags')
           }
           scope.data = {};
           scope.matchingTags = [];
-        }
-        //Delete a tag from currentTags
-        scope.deleteTag = function(tag){
-          var index = scope.currentTags.indexOf(tag);
-          if(index > -1){
-            scope.currentTags.splice(index, 1);
-          }
         }
       }
     }

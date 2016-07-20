@@ -25,14 +25,16 @@ angular.module('tags')
         scope.suggestedTags = scope.suggestedtags();
         //displays the suggested tags based on user input
         scope.getSuggestedTags = function() {
-          if(scope.data.tag.length !== 0){
-            var entry = scope.data.tag.length;
-          }
-          scope.matchingTags = [];
-          for(var i = 0; i<scope.suggestedTags.length; i++){
-            var what = scope.suggestedTags[i].slice(0, entry);
-            if(scope.data.tag.match(new RegExp([what], 'i'))){
-              scope.matchingTags.push(scope.suggestedTags[i])
+          if(scope.data.tag){
+            if(scope.data.tag.length !== 0){
+              var entry = scope.data.tag.length;
+            }
+            scope.matchingTags = [];
+            for(var i = 0; i<scope.suggestedTags.length; i++){
+              var what = scope.suggestedTags[i].slice(0, entry);
+              if(scope.data.tag.match(new RegExp([what], 'i'))){
+                scope.matchingTags.push(scope.suggestedTags[i])
+              }
             }
           }
         }

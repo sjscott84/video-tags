@@ -35,16 +35,15 @@ angular.module('tags')
             }
           }
         }
-        //Saves tag when enter key is pressed
+        //Saves tag when enter key is pressed unless tag already exists and then it flashes the existing tag
         scope.saveTag = function(){
           if(event.keyCode === 13){
             if(scope.currentTags.indexOf(scope.data.tag) === -1){
               scope.currentTags.push(scope.data.tag);
             }else{
-              //$timeout(function(){
-                var elements = document.getElementsByClassName("tag-result");
-                var index = scope.currentTags.indexOf(scope.data.tag);
-                elements[index].style.backgroundColor = "#387ef5";
+              var elements = document.getElementsByClassName("tag-result");
+              var index = scope.currentTags.indexOf(scope.data.tag);
+              elements[index].style.backgroundColor = "#387ef5";
               $timeout(function(){
                 elements[index].style.backgroundColor = "#f7f7f7";
               }, 1000);
@@ -57,7 +56,12 @@ angular.module('tags')
           if(scope.currentTags.indexOf(tag) === -1){
             scope.currentTags.push(tag);
           }else{
-            alert('You already have this tag')
+            var elements = document.getElementsByClassName("tag-result");
+            var index = scope.currentTags.indexOf(tag);
+            elements[index].style.backgroundColor = "#387ef5";
+            $timeout(function(){
+              elements[index].style.backgroundColor = "#f7f7f7";
+            }, 1000);
           }
           scope.data = {};
           scope.matchingTags = [];

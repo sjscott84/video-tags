@@ -6,7 +6,7 @@ angular.module('tags')
         suggestedtags: '&'
       },
       template: '<div>'+
-                  '<div class="tag-result" ng-repeat="result in currentTags">{{result}}<i class="icon ion-close-round"></i></div>'+
+                  '<div class="tag-result" ng-repeat="result in currentTags">{{result}}<i class="icon ion-close-round" ng-click="deleteTag(result)"></i></div>'+
                 '</div>'+
                 '<label class="item item-input item-floating-label">' +
                   '<span class="input-label">Tag</span>' +
@@ -56,6 +56,13 @@ angular.module('tags')
           }
           scope.data = {};
           scope.matchingTags = [];
+        }
+        //Delete a tag
+        scope.deleteTag = function(tag){
+          var index = scope.currentTags.indexOf(tag);
+          if(index > -1){
+            scope.currentTags.splice(index, 1);
+          }
         }
       }
     }

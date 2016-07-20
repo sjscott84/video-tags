@@ -1,5 +1,5 @@
 angular.module('tags')
-  .directive('createTags', function(){
+  .directive('createTags',['$timeout', function($timeout){
     return{
       scope: {
         currenttags: '&',
@@ -17,22 +17,21 @@ angular.module('tags')
                     '{{tag}}' +
                   '</ion-item>' +
                 '</ion-list>',
-      link: function(scope) {
+      link: function(scope, element) {
         scope.data = {};
         scope.matchingTags = [];
-        scope.currentTags = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven'];
+        scope.currentTags = scope.currenttags();
+        scope.suggestedTags = scope.suggestedtags();
         //displays the suggested tags based on user input
         scope.getSuggestedTags = function() {
-          //scope.currentTags = scope.currenttags();
-          var suggestedTags = scope.suggestedtags();
           if(scope.data.tag.length !== 0){
             var entry = scope.data.tag.length;
           }
           scope.matchingTags = [];
-          for(var i = 0; i<suggestedTags.length; i++){
-            var what = suggestedTags[i].slice(0, entry);
+          for(var i = 0; i<scope.suggestedTags.length; i++){
+            var what = scope.suggestedTags[i].slice(0, entry);
             if(scope.data.tag.match(new RegExp([what], 'i'))){
-              scope.matchingTags.push(suggestedTags[i])
+              scope.matchingTags.push(scope.suggestedTags[i])
             }
           }
         }
@@ -42,7 +41,13 @@ angular.module('tags')
             if(scope.currentTags.indexOf(scope.data.tag) === -1){
               scope.currentTags.push(scope.data.tag);
             }else{
-              alert('You already have this tag');
+              //$timeout(function(){
+                var elements = document.getElementsByClassName("tag-result");
+                var index = scope.currentTags.indexOf(scope.data.tag);
+                elements[index].style.backgroundColor = "#387ef5";
+              $timeout(function(){
+                elements[index].style.backgroundColor = "#f7f7f7";
+              }, 1000);
             }
             scope.data = {};
           }
@@ -57,7 +62,7 @@ angular.module('tags')
           scope.data = {};
           scope.matchingTags = [];
         }
-        //Delete a tag
+        //Delete a tag from currentTags
         scope.deleteTag = function(tag){
           var index = scope.currentTags.indexOf(tag);
           if(index > -1){
@@ -66,4 +71,4 @@ angular.module('tags')
         }
       }
     }
-  })
+  }])

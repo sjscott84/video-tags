@@ -55,6 +55,7 @@ angular.module('tags')
             scope.currentTags.splice(index, 1);
           }
         }
+        //Function that actually saves the tags
         scope.saveAllTags = function (tag){
           if(scope.currentTags.indexOf(tag) === -1){
             scope.currentTags.push(tag);
